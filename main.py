@@ -1,10 +1,10 @@
-import openai
 import os
 import sys
+from openai import OpenAI
 
-openai.api_key = os.environ['OPENAI_API_KEY']
+api_key = os.environ.get('OPENAI_API_KEY', '')
 
-if openai.api_key == "":
+if api_key == "":
   sys.stderr.write("""
   You haven't set up your API key yet.
 
@@ -20,7 +20,9 @@ if openai.api_key == "":
   """)
   exit(1)
 
-response = openai.chat.completions.create(
+client = OpenAI(api_key=api_key)
+
+response = client.chat.completions.create(
     model="gpt-4",
     messages=[{
         "role": "system",
@@ -38,4 +40,4 @@ response = openai.chat.completions.create(
         "content": "Where was it played?"
     }])
 
-print(response)
+print(response.choices[0].message.content)
