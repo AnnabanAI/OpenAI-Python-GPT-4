@@ -1,17 +1,19 @@
 [tool.poetry]
-name = "python-template"
+name = "annabanai-governance-gateway"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Provider-neutral human-governed AI gateway and tamper-evident audit chain"
+authors = ["Jacob Wayne Kinnaird"]
+packages = [{ include = "annabanai_gateway" }]
 
 [tool.poetry.dependencies]
-python = ">=3.11.0,<3.12"
-openai = "^1.3"
+python = ">=3.11,<4.0"
 
-[tool.poetry.dev-dependencies]
-debugpy = "^1.6.2"
-replit-python-lsp-server = {extras = ["yapf", "rope", "pyflakes"], version = "^1.5.9"}
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry.scripts]
+annabanai-gateway = "annabanai_gateway.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
