@@ -1,18 +1,25 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "annabanai-governance-gateway"
 version = "0.1.0"
 description = "Provider-neutral human-governed AI gateway and tamper-evident audit chain"
-authors = ["Jacob Wayne Kinnaird"]
-packages = [{ include = "annabanai_gateway" }]
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary until the repository owner selects a license" }
+dependencies = []
 
-[tool.poetry.dependencies]
-python = ">=3.11,<4.0"
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.0"
-
-[tool.poetry.scripts]
+[project.scripts]
 annabanai-gateway = "annabanai_gateway.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["annabanai_gateway*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
