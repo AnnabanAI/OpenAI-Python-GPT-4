@@ -1,0 +1,52 @@
+apiVersion: annaba.ai/v1
+kind: GovernanceGateway
+metadata:
+  name: annabanai-provider-gateway
+  version: "1.0.0"
+  owner: Jacob Wayne Kinnaird
+
+governance:
+  default_mode: advisory
+  fail_closed_for_protected_actions: true
+  require_evidence_for_material_claims: true
+  preserve_provider_identity: true
+
+providers:
+  demo:
+    enabled: true
+    adapter: demo
+  openai:
+    enabled: false
+    adapter: openai_responses
+    credentials_from: OPENAI_API_KEY
+  gemini:
+    enabled: false
+    adapter: gemini_generate_content
+    credentials_from: GEMINI_API_KEY
+  grok:
+    enabled: false
+    adapter: xai_chat_completions
+    credentials_from: XAI_API_KEY
+
+policy:
+  allowed_actions: [analyze, summarize, recommend, compare]
+  protected_actions:
+    - execute_external_transaction
+    - modify_production_system
+    - authorize_payment
+    - publish_binding_commitment
+
+audit:
+  enabled: true
+  format: jsonl
+  hash_algorithm: SHA-256
+  hash_chain: true
+  log_secrets: false
+
+execution:
+  external_side_effects_enabled: false
+  require_separate_executor_authorization: true
+
+notes:
+  - "Provider connections remain disabled until adapters, credentials, and controls are configured."
+  - "The demo adapter does not independently verify factual claims."
